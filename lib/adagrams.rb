@@ -9,4 +9,21 @@ def draw_letters
   return pool.pop(10)
 end
 
-puts "#{draw_letters}"
+
+def uses_available_letters?(input, letters_in_hand)
+  input.upcase.chars.each do |char|
+    if letters_in_hand.include? char
+      check_index = letters_in_hand.index(char)
+      letters_in_hand.delete_at(check_index)
+
+    else
+      return false
+    end
+  end
+  return true
+end
+
+input = "tza"
+letters_in_hand = ["A", "M", "C", "C", "T", "Z"]
+
+puts uses_available_letters?(input, letters_in_hand)
