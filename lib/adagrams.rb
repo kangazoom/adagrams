@@ -69,9 +69,47 @@ def score_word(word)
   return score
 end
 
+
+def highest_score_from(words)
+
+  highest_score = 0
+  best_word = ''
+  words.each do |word|
+
+    if score_word(word) > highest_score
+
+      highest_score = score_word(word)
+      # best_word << word
+      best_word = word
+
+    elsif score_word(word) == highest_score
+
+      if word.length != best_word.length
+        if word.length == 10
+          highest_score = score_word(word)
+          best_word = word
+
+        end
+        if word.length < best_word.length && best_word.length != 10
+          highest_score = score_word(word)
+          best_word = word
+
+        end
+      end
+    end
+  end
+
+  return {:word => best_word,
+          :score => highest_score}
+end
+
 input = "cat"
 letters_in_hand = ["A", "M", "C", "C", "T", "Z"]
 puts uses_available_letters?(input, letters_in_hand)
 
 
 puts score_word("parameter")
+
+sample_word = ["CAT", "QQQQQQQQQQ", "ZZZZZZZZZZ", "ACT"]
+
+puts highest_score_from(sample_word)
