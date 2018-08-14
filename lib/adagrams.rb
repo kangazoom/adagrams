@@ -13,6 +13,8 @@ end
 def uses_available_letters?(input, letters_in_hand)
   input.upcase.chars.each do |char|
     if letters_in_hand.include? char
+
+
       check_index = letters_in_hand.index(char)
       letters_in_hand.delete_at(check_index)
 
@@ -20,10 +22,56 @@ def uses_available_letters?(input, letters_in_hand)
       return false
     end
   end
+
   return true
 end
 
-input = "tza"
-letters_in_hand = ["A", "M", "C", "C", "T", "Z"]
+def score_word(word)
+  score = 0
 
+  score_chart = {
+    "A" => 1,
+    "B" => 3,
+    "C" => 3,
+    "D" => 2,
+    "E" => 1,
+    "F" => 4,
+    "G" => 2,
+    "H" => 4,
+    "I" => 1,
+    "J" => 8,
+    "K" => 5,
+    "L" => 1,
+    "M" => 3,
+    "N" => 1,
+    "O" => 1,
+    "P" => 3,
+    "Q" => 10,
+    "R" => 1,
+    "S" => 1,
+    "T" => 1,
+    "U" => 1,
+    "V" => 4,
+    "W" => 4,
+    "X" => 8,
+    "Y" => 4,
+    "Z" => 10
+    }
+
+  word.upcase.chars.each do |char|
+    score += score_chart[char]
+  end
+
+  if word.length >= 7
+    score += 8
+  end
+
+  return score
+end
+
+input = "cat"
+letters_in_hand = ["A", "M", "C", "C", "T", "Z"]
 puts uses_available_letters?(input, letters_in_hand)
+
+
+puts score_word("parameter")
