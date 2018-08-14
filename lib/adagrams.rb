@@ -14,22 +14,21 @@ def draw_letters
 end
 
 
-def uses_available_letters?(input, letters_in_hand)
+def uses_available_letters?(input, letters)
   # check through each character; is it available?
+  letters_altered = letters.clone
+
   input.upcase.chars.each do |char|
-    if letters_in_hand.include? char
+    if letters_altered.include? char
 
       # delete letter once user inputs it
-      check_index = letters_in_hand.index(char)
-      letters_in_hand.delete_at(check_index)
+      check_index = letters_altered.index(char)
+      letters_altered.delete_at(check_index)
 
     else
-    # letter is not avaialable
       return false
     end
   end
-
-  # letter is avaialble
   return true
 end
 
@@ -128,15 +127,19 @@ def is_in_english_dict?(input)
 
 # iterate through each row in csv file
 # each row is an array, so check the 0th index
-  CSV.foreach("../assets/dictionary-english.csv") do |row|
+  english_words = CSV.open("assets/dictionary-english.csv", "r")
+  english_words.each do |row|
+
   # check if user input word is found within dictionary
     if input.upcase == row[0].upcase
       return true
-    end
 
+    end
   end
 
   return false
 
 
 end
+
+puts is_in_english_dict?('cat')

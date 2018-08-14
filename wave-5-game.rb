@@ -64,11 +64,15 @@ def run_game
 
     while ( (!(uses_available_letters?(user_input_word, letter_bank)) ) || (!(is_in_english_dict?(user_input_word))) )
 
+      # puts "Beginning of while loop, letter_bank = #{letter_bank}"
       if !(uses_available_letters?(user_input_word, letter_bank))
         display_not_in_letter_bank_message
       elsif !(is_in_english_dict?(user_input_word))
         display_not_in_dictionary_message
       end
+
+      # puts "End of while loop, letter_bank = #{letter_bank}"
+
       user_input_word = get_user_input
     end
 

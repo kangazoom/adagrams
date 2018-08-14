@@ -168,4 +168,35 @@ describe 'Adagrams' do
       expect(best_word[:score]).must_equal 18
     end
   end
+
+
+  describe 'is_in_english_dict? method' do
+
+    it 'returns true for valid english words from csv file' do
+
+      word = 'bladder'
+
+      result = is_in_english_dict?(word)
+
+      expect( result ).must_equal true
+
+    end
+
+
+    # it 'returns false for gibberish'
+    #
+    # end
+
+    # it 'returns false if empty string'
+    #
+    # end
+
+    # it 'raise ArgumentError if input is not string'
+    #
+    # end
+
+
+
+  end
+
 end
