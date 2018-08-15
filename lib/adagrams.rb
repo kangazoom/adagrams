@@ -139,15 +139,14 @@ def highest_score_from(words)
           :score => highest_score}
 end
 
+
+
 def create_hash()
-
-
   english_words = CSV.open("assets/dictionary-english.csv", "r")
 
   english_words.each do |row|
     $words_hash[row[0].upcase] = 0
   end
-  return $words_hash
 end
 
 def is_in_english_dict?(input)
@@ -157,24 +156,13 @@ def is_in_english_dict?(input)
 # iterate through each row in csv file
 # each row is an array, so check the 0th index
   puts $words_hash[input]
-  if $words_hash[input]
+  if $words_hash[input.upcase]
     return true
   else
     return false
   end
 
-  # # check if user input word is found within dictionary
-  #   if input.upcase == row[0].upcase
-  # # return true if word is in dictionary (csv file)
-  #     return true
-  #
-  #   end
-  # end
-
-  # return false if word is NOT dictionary (csv file)
-  # return false
 end
 
 
 puts create_hash()
-puts is_in_english_dict?("cat")
