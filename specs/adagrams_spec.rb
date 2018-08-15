@@ -183,17 +183,17 @@ describe 'Adagrams' do
     end
 
 
-    # it 'returns false for gibberish'
-    #
-    # end
+    it 'returns false for gibberish'
 
-    # it 'returns false if empty string'
-    #
-    # end
+    end
 
-    # it 'raise ArgumentError if input is not string'
-    #
-    # end
+    it 'returns false if empty string'
+
+    end
+
+    it 'raise ArgumentError if input is not string'
+
+    end
 
 
 

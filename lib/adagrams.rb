@@ -10,14 +10,20 @@ def draw_letters
   # randomize letters
   pool.shuffle!
 
+  # return the first 10 letters from randomized pool
   return pool.pop(10)
 end
 
 
 def uses_available_letters?(input, letters)
-  # check through each character; is it available?
+  # input --> user's word (string)
+  # letters --> available letters in pool
+
+  # made a clone(?) of letters; previously, we ran into pointer/duplication issues
+  # we don't want to alter letters since it needs to reset with all 10 pulled letters available
   letters_altered = letters.clone
 
+  # check through each character; is it available?
   input.upcase.chars.each do |char|
     if letters_altered.include? char
 
@@ -26,13 +32,17 @@ def uses_available_letters?(input, letters)
       letters_altered.delete_at(check_index)
 
     else
+    # return false if user does NOT have available lettesr for input
       return false
     end
   end
+  # return true if user has available letters for input
   return true
 end
 
 def score_word(word)
+  # word --> string; user's input word
+
   # initialize scoring value
   score = 0
 
@@ -76,11 +86,14 @@ def score_word(word)
     score += 8
   end
 
+  # return score as int
   return score
 end
 
 
 def highest_score_from(words)
+  # word --> string; user's input word
+
 
   # initializing values
   highest_score = 0
@@ -119,11 +132,14 @@ def highest_score_from(words)
     end
   end
 
+  # return hash containing highest scoring word AND the score for that word
   return {:word => best_word,
           :score => highest_score}
 end
 
 def is_in_english_dict?(input)
+  # input --> string; user's input word
+
 
 # iterate through each row in csv file
 # each row is an array, so check the 0th index
@@ -132,14 +148,14 @@ def is_in_english_dict?(input)
 
   # check if user input word is found within dictionary
     if input.upcase == row[0].upcase
+  # return true if word is in dictionary (csv file)
       return true
 
     end
   end
 
+  # return false if word is NOT dictionary (csv file)
   return false
 
 
 end
-
-puts is_in_english_dict?('cat')
