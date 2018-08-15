@@ -175,9 +175,19 @@ describe 'Adagrams' do
     it 'returns true for valid english words from csv file' do
 
       word = 'bladder'
-
       result = is_in_english_dict?(word)
+      expect( result ).must_equal true
 
+      word = 'pierce'
+      result = is_in_english_dict?(word)
+      expect( result ).must_equal true
+
+      word = 'CoCoNUTs'
+      result = is_in_english_dict?(word)
+      expect( result ).must_equal true
+
+      word = 'XYLOPHONE'
+      result = is_in_english_dict?(word)
       expect( result ).must_equal true
 
     end
@@ -185,11 +195,21 @@ describe 'Adagrams' do
 
     it 'returns false for gibberish' do
 
-    word = "jfdks"
+      word = "jfdks"
+      result = is_in_english_dict?(word)
+      expect(result).must_equal false
 
-    result = is_in_english_dict?(word)
+      word = "SSSSSSSS"
+      result = is_in_english_dict?(word)
+      expect(result).must_equal false
 
-    expect(result).must_equal false
+      word = "iIiIi"
+      result = is_in_english_dict?(word)
+      expect(result).must_equal false
+
+      word = "pupppy"
+      result = is_in_english_dict?(word)
+      expect(result).must_equal false
 
     end
 
