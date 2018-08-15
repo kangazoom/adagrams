@@ -183,17 +183,23 @@ describe 'Adagrams' do
     end
 
 
-    it 'returns false for gibberish'
+    it 'returns false for gibberish' do
+
+    word = "jfdks"
+
+    result = is_in_english_dict?(word)
+
+    expect(result).must_equal false
 
     end
 
-    it 'returns false if empty string'
-
-    end
-
-    it 'raise ArgumentError if input is not string'
-
-    end
+    # it 'returns false if empty string' do
+    #
+    # end
+    #
+    # it 'raise ArgumentError if input is not string' do
+    #
+    # end
 
 
 
