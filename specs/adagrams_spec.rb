@@ -213,16 +213,12 @@ describe 'Adagrams' do
 
     end
 
-    # it 'returns false if empty string' do
-    #
-    # end
-    #
-    # it 'raise ArgumentError if input is not string' do
-    #
-    # end
+    it 'returns false if empty string' do
 
+      word = ""
+      result = is_in_english_dict?(word)
+      expect(result).must_equal false
 
-
+    end
   end
-
 end
