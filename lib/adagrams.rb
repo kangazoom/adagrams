@@ -1,8 +1,8 @@
 
 # adds csv gem
 require "csv"
-require "pry"
 
+# initialize global variable
 $words_hash = {}
 
 def draw_letters
@@ -97,7 +97,6 @@ end
 def highest_score_from(words)
   # word --> string; user's input word
 
-
   # initializing values
   highest_score = 0
   best_word = ''
@@ -135,16 +134,20 @@ def highest_score_from(words)
   end
 
   # return hash containing highest scoring word AND the score for that word
-  return {:word => best_word,
-          :score => highest_score}
+  return {word: best_word,
+          score: highest_score}
 end
 
 
 
 def create_hash()
+  # read csv file
   english_words = CSV.open("assets/dictionary-english.csv", "r")
 
+  # iterate through each row in csv file
   english_words.each do |row|
+  # each row is an array, so check the 0th index
+  # {key, value} --> {"WORD", 0}
     $words_hash[row[0].upcase] = 0
   end
 end
@@ -152,17 +155,14 @@ end
 def is_in_english_dict?(input)
   # input --> string; user's input word
 
-
-# iterate through each row in csv file
-# each row is an array, so check the 0th index
-  puts $words_hash[input]
+  # will return a value --> truthy
   if $words_hash[input.upcase]
     return true
+  # if no truthy value, then false
   else
     return false
   end
 
 end
 
-
-puts create_hash()
+create_hash()
