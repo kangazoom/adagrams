@@ -7,29 +7,26 @@ def draw_letters
   # letter pool
   pool = ('A'*9 + 'B'*2 + 'C'*2 + 'D'*4 + 'E'*12 + 'F'*2 + 'G'*3 + 'H'*2 + 'I'*9 + 'J' + 'K' + 'L'*4 + 'M'*2 + 'N'*6 + 'O'*8 + 'P'*2 + 'Q' + 'R'*6 + 'S'*4 + 'T'*6 + 'U'*4 + 'V'*2 + 'W'*2 + 'X' + 'Y'*2 + 'Z').chars
 
-  # randomize letters
-  pool.shuffle!
-
-  # return the first 10 letters from randomized pool
-  return pool.pop(10)
+  # randomize and return the first 10 letters from randomized pool
+  return pool.shuffle.pop(10)
 end
 
 
-def uses_available_letters?(input, letters)
+def uses_available_letters?(input, letters_orig)
   # input --> user's word (string)
   # letters --> available letters in pool
 
   # made a clone(?) of letters; previously, we ran into pointer/duplication issues
   # we don't want to alter letters since it needs to reset with all 10 pulled letters available
-  letters_altered = letters.clone
+  letters = letters_orig.clone
 
   # check through each character; is it available?
   input.upcase.chars.each do |char|
-    if letters_altered.include? char
+    if letters.include? char
 
       # delete letter once user inputs it
-      check_index = letters_altered.index(char)
-      letters_altered.delete_at(check_index)
+      check_index = letters.index(char)
+      letters.delete_at(check_index)
 
     else
     # return false if user does NOT have available lettesr for input
@@ -102,23 +99,19 @@ def highest_score_from(words)
   # loop through each word in array of user input
   words.each do |word|
 
-
     if score_word(word) > highest_score
 
       # if we have found the highest scoring word, set variable equal to that score and that word
       highest_score = score_word(word)
       best_word = word
 
-    # check for score ties
-    elsif score_word(word) == highest_score
+    # check for score ties and that length is unequal
+    elsif score_word(word) == highest_score && word.length != best_word.length
 
-      # check that the lengths are unequal, since that matters for winning
-      if word.length != best_word.length
       # check if highest scoring word length is 10; if so, that's the winning word
         if word.length == 10
           highest_score = score_word(word)
           best_word = word
-
         end
 
         # check that word length is less than best word's length AND that it does not equal 10
@@ -126,20 +119,17 @@ def highest_score_from(words)
         if word.length < best_word.length && best_word.length != 10
           highest_score = score_word(word)
           best_word = word
-
         end
-      end
     end
   end
 
   # return hash containing highest scoring word AND the score for that word
-  return {:word => best_word,
-          :score => highest_score}
+  return {word: best_word,
+          score: highest_score}
 end
 
 def is_in_english_dict?(input)
   # input --> string; user's input word
-
 
 # iterate through each row in csv file
 # each row is an array, so check the 0th index
