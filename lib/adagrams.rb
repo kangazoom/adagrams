@@ -11,10 +11,8 @@ def draw_letters
   pool = ('A'*9 + 'B'*2 + 'C'*2 + 'D'*4 + 'E'*12 + 'F'*2 + 'G'*3 + 'H'*2 + 'I'*9 + 'J' + 'K' + 'L'*4 + 'M'*2 + 'N'*6 + 'O'*8 + 'P'*2 + 'Q' + 'R'*6 + 'S'*4 + 'T'*6 + 'U'*4 + 'V'*2 + 'W'*2 + 'X' + 'Y'*2 + 'Z').chars
 
   # randomize letters
-  pool.shuffle!
-
   # return the first 10 letters from randomized pool
-  return pool.pop(10)
+  return pool.shuffle.pop(10)
 end
 
 
@@ -24,15 +22,15 @@ def uses_available_letters?(input, letters)
 
   # made a clone(?) of letters; previously, we ran into pointer/duplication issues
   # we don't want to alter letters since it needs to reset with all 10 pulled letters available
-  letters_altered = letters.clone
+  letters_copy = letters.clone
 
   # check through each character; is it available?
   input.upcase.chars.each do |char|
-    if letters_altered.include? char
+    if letters_copy.include? char
 
       # delete letter once user inputs it
-      check_index = letters_altered.index(char)
-      letters_altered.delete_at(check_index)
+      check_index = letters_copy.index(char)
+      letters_copy.delete_at(check_index)
 
     else
     # return false if user does NOT have available lettesr for input
@@ -46,8 +44,6 @@ end
 def score_word(word)
   # word --> string; user's input word
 
-  # initialize scoring value
-  score = 0
 
   # create scoring chart
   score_chart = {
@@ -80,8 +76,8 @@ def score_word(word)
     }
 
   # add scores together
-  word.upcase.chars.each do |char|
-    score += score_chart[char]
+  score = word.upcase.chars.sum do |char|
+    score_chart[char]
   end
 
   # add eight extra points for words 7+ in length
@@ -111,24 +107,18 @@ def highest_score_from(words)
       best_word = word
 
     # check for score ties
-    elsif score_word(word) == highest_score
+    # check that the lengths are unequal, since that matters for winning
 
-      # check that the lengths are unequal, since that matters for winning
-      if word.length != best_word.length
+      elsif score_word(word) == highest_score && word.length != best_word.length
+
+
+
       # check if highest scoring word length is 10; if so, that's the winning word
-        if word.length == 10
-          highest_score = score_word(word)
-          best_word = word
-
-        end
-
-        # check that word length is less than best word's length AND that it does not equal 10
-        # if there is a tie between two high scoring words (and the current best word is not a length 10; otherwise, it wins), then choose the shortest length
-        if word.length < best_word.length && best_word.length != 10
-          highest_score = score_word(word)
-          best_word = word
-
-        end
+      # check that word length is less than best word's length AND that it does not equal 10
+      # if there is a tie between two high scoring words (and the current best word is not a length 10; otherwise, it wins), then choose the shortest length
+      if (word.length == 10) || (word.length < best_word.length && best_word.length != 10)
+        highest_score = score_word(word)
+        best_word = word
       end
     end
   end
@@ -155,13 +145,18 @@ end
 def is_in_english_dict?(input)
   # input --> string; user's input word
 
-  # will return a value --> truthy
-  if $words_hash[input.upcase]
-    return true
-  # if no truthy value, then false
-  else
-    return false
-  end
+  # if it returns a value --> true
+  # otherwise, false
+  $words_hash.include?(input.upcase) ? true : false
+
+  # NOTE: we did this first, but decided to create a hash for enhanced efficiency
+# english_words = CSV.open("assets/dictionary-english.csv", "r")
+# english_words.each do |row|
+# #   if input.upcase == row[0].upcase
+# return true if word is in dictionary (csv file)
+#     return true
+#   end
+# return false
 
 end
 
